@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mindspace-backend:
+    build: ./backend
+    container_name: mindspace-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+
+  mindspace-frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+        VITE_API_URL: http://localhost:5000
+    container_name: mindspace-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - mindspace-backend
+    restart: unless-stopped
