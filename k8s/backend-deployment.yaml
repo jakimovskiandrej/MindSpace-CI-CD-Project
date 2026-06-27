@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mindspace-backend
+  namespace: mindspace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mindspace-backend
+  template:
+    metadata:
+      labels:
+        app: mindspace-backend
+    spec:
+      containers:
+        - name: mindspace-backend
+          image: jakimovskiandrej/mindspace-backend:latest
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: mindspace-config
+            - secretRef:
+                name: mindspace-secret

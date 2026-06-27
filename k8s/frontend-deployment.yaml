@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mindspace-frontend
+  namespace: mindspace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mindspace-frontend
+  template:
+    metadata:
+      labels:
+        app: mindspace-frontend
+    spec:
+      containers:
+        - name: mindspace-frontend
+          image: jakimovskiandrej/mindspace-frontend:latest
+          ports:
+            - containerPort: 80
